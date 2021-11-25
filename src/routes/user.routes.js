@@ -75,7 +75,7 @@ router.post('/create', async (req, res) => {
                       res.json({
                         status: "SUCCESS",
                         message: "Signup successful",
-                        data: result.email,
+                        email: result.email,
                       });
                     })
                     .catch((err) => {
