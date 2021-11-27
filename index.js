@@ -15,6 +15,7 @@ app.use(cors())
 // ROTAS
 app.use('/user',require('./src/routes/user.routes'));
 app.use('/tema',require('./src/routes/tema.routes'))
+app.use('/tema-nivel',require('./src/routes/tema.nivel.routes'))
 
 const port = 3000;
 app.listen(process.env.PORT || port);
