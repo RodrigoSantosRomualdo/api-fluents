@@ -34,7 +34,7 @@ router.post('/buscar', async (req, res) => {
 
   try {
 
-    const data = await tema.find();
+    const data = await tema.find({});
 
       res.send(data)
       res.status(201).end()
