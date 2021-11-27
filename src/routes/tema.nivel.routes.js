@@ -33,8 +33,8 @@ router.post('/create', async (req, res) => {
 router.post('/buscar', async (req, res) => {
 
   try {
-
-    const data = await temaNivel.find({});
+    const { tema_aprendizado } = req.body;
+    const data = await temaNivel.find({tema_aprendizado});
 
       res.send(data)
       res.status(201).end()
