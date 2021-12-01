@@ -22,7 +22,7 @@ router.post('/create', async (req, res) => {
      
    } catch (error) {
       if (erro.name === 'MongoError' && erro.code === 11000) {
-         res.status(400).send({error: 'E-mail já existe'})
+         res.status(400).send({error: 'Erro ao criar Tema'})
        } else {
          res.status(500).send(erro)
        }
