@@ -17,17 +17,27 @@ router.post('/pagamento', async (req, res) => {
 
       let preference = {
          items: [{
-            title: 'Blue shirt',
-            quantity: 10,
+            title: 'Premium Fluents',
+            quantity: 1,
             currency_id: 'BRL',
-            unit_price: 10
+            unit_price: 9.99
             }],
          payer: {
+            name: "Preencher",
             email: "demo@mail.com"
          },
+         back_urls: {
+            failure: "https://fluents.com/failure",
+            pending: "https://fluents.com/pending",
+            success: "https://fluents.com/success",
+         },
          payment_methods: {
-            installments: 1
-         }
+            installments: 1,
+            excluded_payment_types: [
+               {"id": "ticket"}
+            ]
+         },
+         
       };
 
       mercadopago.preferences.create(preference).then(function (data) {

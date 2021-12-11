@@ -8,10 +8,39 @@ const User = require('../models/user');
 const generator = require('generate-password');
 const bcrypt = require('bcrypt');
 const nodemailer = require("nodemailer");
-
+const moment = require("moment");
 
 const db = mongoose.connection;
 //const session = await db.startSession();
+
+router.post('/premium', async (req, res) => { 
+
+  try {
+
+    let date = new Date();
+    console.log(date.getFullYear())
+    const dataBrasil = date.setFullYear(date.getFullYear() + 1)
+    //moment(dataBrasil).format("DD/MM/YYYY");
+    //console.log('moment(dataBrasil).format("DD/MM/YYYY"): ', moment(dataBrasil).format("DD/MM/YYYY"))
+    
+    await User.updateOne({email: "rodrigo.s.romualdo@gmail.com"}, { $set: {premium: false, data_premium: dataBrasil }})
+    const dateresult = await User.find({email: "rodrigo.s.romualdo@gmail.com"})
+    console.log('date: ', moment(dateresult[0].data_premium).format("DD/MM/YYYY") )
+    res.json({
+      status: "SUCESSO",
+      message: "Você acabou de ser premium",
+    });
+    
+  } catch (error) {
+    res.json({
+      status: "FAILED",
+      message: "Ocorreu erro em ser premium",
+    });
+    
+  }
+
+
+});
 
 router.post('/create', async (req, res) => {
 
@@ -238,11 +267,10 @@ router.post('/recupera-password', async (req, res) => {
 
 router.post('/finduser', async (req, res) => {
     console.log('Busca USER', )
-    //let teste = "rsr@gmail.com"
     try {
        console.log(req.body)
+       const { email } = req.body;
        const data = await User.find({email: email},{password: 0})
-        
        if (data.length === 0) {
          res.send({error: false, existeData: false, data})
          res.status(201).end()

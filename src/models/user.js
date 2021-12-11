@@ -7,6 +7,8 @@ const user = new Schema({
     email: String,
     password: String,
     telefone: String,
+    premium: Boolean,
+    data_premium: Date,
     email_sistema_externo: Boolean,
     dataCadastro: {
         type: Date,
