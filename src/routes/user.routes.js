@@ -271,11 +271,15 @@ router.post('/finduser', async (req, res) => {
        console.log(req.body)
        const { email } = req.body;
        const data = await User.find({email: email},{password: 0})
+       console.log('date moment: ', moment(data[0]?.data_premium).format("DD/MM/YYYY") )
+       console.log('data ', data[0].data_premium)
+       const dataMoment = moment(data[0].data_premium).format("DD/MM/YYYY");
+       console.log('dataMoment: ', dataMoment)
        if (data.length === 0) {
-         res.send({error: false, existeData: false, data})
+         res.send({error: false, existeData: false, dataMoment: dataMoment, data})
          res.status(201).end()
        } else {
-         res.send({error: false, existeData: true, data})
+         res.send({error: false, existeData: true, dataMoment: dataMoment, data})
          res.status(201).end()
        }
          
