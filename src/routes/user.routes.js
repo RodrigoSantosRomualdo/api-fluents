@@ -23,9 +23,9 @@ router.post('/premium', async (req, res) => {
     //moment(dataBrasil).format("DD/MM/YYYY");
     //console.log('moment(dataBrasil).format("DD/MM/YYYY"): ', moment(dataBrasil).format("DD/MM/YYYY"))
     
-    await User.updateOne({email: "rodrigo.s.romualdo@gmail.com"}, { $set: {premium: false, data_premium: dataBrasil }})
+    /*await User.updateOne({email: "rodrigo.s.romualdo@gmail.com"}, { $set: {premium: false, data_premium: dataBrasil }})
     const dateresult = await User.find({email: "rodrigo.s.romualdo@gmail.com"})
-    console.log('date: ', moment(dateresult[0].data_premium).format("DD/MM/YYYY") )
+    console.log('date: ', moment(dateresult[0].data_premium).format("DD/MM/YYYY") ) */
     res.json({
       status: "SUCESSO",
       message: "Você acabou de ser premium",
@@ -271,15 +271,17 @@ router.post('/finduser', async (req, res) => {
        console.log(req.body)
        const { email } = req.body;
        const data = await User.find({email: email},{password: 0})
-       console.log('date moment: ', moment(data[0]?.data_premium).format("DD/MM/YYYY") )
+      /* console.log('date moment: ', moment(data[0]?.data_premium).format("DD/MM/YYYY") )
        console.log('data ', data[0].data_premium)
        const dataMoment = moment(data[0].data_premium).format("DD/MM/YYYY");
-       console.log('dataMoment: ', dataMoment)
+       console.log('dataMoment: ', dataMoment) */
        if (data.length === 0) {
-         res.send({error: false, existeData: false, dataMoment: dataMoment, data})
+         //res.send({error: false, existeData: false, dataMoment: moment(data[0].data_premium).format("DD/MM/YYYY"), data})
+         res.send({error: false, existeData: false, data})
          res.status(201).end()
        } else {
-         res.send({error: false, existeData: true, dataMoment: dataMoment, data})
+         //res.send({error: false, existeData: true, dataMoment: moment(data[0].data_premium).format("DD/MM/YYYY"), data})
+         res.send({error: false, existeData: true, data})
          res.status(201).end()
        }
          

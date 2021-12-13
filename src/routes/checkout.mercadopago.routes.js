@@ -11,7 +11,6 @@ mercadopago.configure({
 });
 
 router.post('/pagamento', async (req, res) => {
-
    try {
       console.log(req.body)
 
@@ -24,7 +23,7 @@ router.post('/pagamento', async (req, res) => {
             }],
          payer: {
             name: "Preencher",
-            email: "demo@mail.com"
+            email: 'req.body.email@gmail.com',
          },
          back_urls: {
             failure: "https://fluents.com/failure",
@@ -41,7 +40,7 @@ router.post('/pagamento', async (req, res) => {
       };
 
       mercadopago.preferences.create(preference).then(function (data) {
-         console.log('data: ',data)
+        // console.log('data: ',data)
          res.json(data.response.sandbox_init_point)
          res.status(201).end()
       }).catch(function (error) {
