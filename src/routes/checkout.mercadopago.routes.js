@@ -12,7 +12,7 @@ mercadopago.configure({
 
 router.post('/pagamento', async (req, res) => {
    try {
-      console.log(req.body)
+    //  console.log(req.body.email)
 
       let preference = {
          items: [{
@@ -22,8 +22,7 @@ router.post('/pagamento', async (req, res) => {
             unit_price: 9.99
             }],
          payer: {
-            name: "Preencher",
-            email: 'req.body.email@gmail.com',
+            email: req.body.email,
          },
          back_urls: {
             failure: "https://fluents.com/failure",
@@ -33,14 +32,18 @@ router.post('/pagamento', async (req, res) => {
          payment_methods: {
             installments: 1,
             excluded_payment_types: [
-               {"id": "ticket"}
+               {"id": "ticket"},
+               {"id":"atm"},
+               {"id":"debit_card"}
             ]
          },
          
       };
+      // name: "Preencher", obs: colocar no payer
 
       mercadopago.preferences.create(preference).then(function (data) {
         // console.log('data: ',data)
+        // console.log('PASSOU AQUI');
          res.json(data.response.sandbox_init_point)
          res.status(201).end()
       }).catch(function (error) {

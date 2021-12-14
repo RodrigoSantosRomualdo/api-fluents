@@ -16,16 +16,22 @@ const db = mongoose.connection;
 router.post('/premium', async (req, res) => { 
 
   try {
-
+    //console.log('req ', req.body.email)
     let date = new Date();
     console.log(date.getFullYear())
     const dataBrasil = date.setFullYear(date.getFullYear() + 1)
-    //moment(dataBrasil).format("DD/MM/YYYY");
+    //console.log('dataBrasil' , moment(dataBrasil).format("DD/MM/YYYY"))
+    moment(dataBrasil).format("DD/MM/YYYY");
+
+
+
+
     //console.log('moment(dataBrasil).format("DD/MM/YYYY"): ', moment(dataBrasil).format("DD/MM/YYYY"))
     
     /*await User.updateOne({email: "rodrigo.s.romualdo@gmail.com"}, { $set: {premium: false, data_premium: dataBrasil }})
     const dateresult = await User.find({email: "rodrigo.s.romualdo@gmail.com"})
     console.log('date: ', moment(dateresult[0].data_premium).format("DD/MM/YYYY") ) */
+    await User.updateOne({email: req.body.email}, { $set: {premium: true, data_premium: dataBrasil }})
     res.json({
       status: "SUCESSO",
       message: "Você acabou de ser premium",
