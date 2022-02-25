@@ -13,6 +13,13 @@ const moment = require("moment");
 const db = mongoose.connection;
 //const session = await db.startSession();
 
+router.post('/datapremium', async (req, res) => {
+  
+  res.json({
+    data: process.env.DATA
+  })
+})
+
 router.post('/premium', async (req, res) => { 
 
   try {
