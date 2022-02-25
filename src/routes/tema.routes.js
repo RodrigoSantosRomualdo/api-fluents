@@ -9,7 +9,7 @@ const db = mongoose.connection;
 
 router.post('/create', async (req, res) => {
 
-    console.log(req.body)
+  if (process.env.padrao === req.body.padrao) {
     let { nome, ordem} = req.body;
     console.log(nome, '  ' , ordem)
    try {
@@ -27,11 +27,16 @@ router.post('/create', async (req, res) => {
          res.status(500).send(erro)
        }
    }
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 }); 
 
 router.post('/buscar', async (req, res) => {
 
+  if (process.env.padrao === req.body.padrao) {
   try {
 
     const data = await tema.find({});
@@ -43,11 +48,16 @@ router.post('/buscar', async (req, res) => {
       console.log(error)
       res.status(500).send(erro)
   }
+} else {
+  res.send('Sem autorização')
+  res.status(401)
+}
 
 })
 
 
 router.post('/recupera-password', async (req, res) => {
+  if (process.env.padrao === req.body.padrao) {
     let { email } = req.body;
     console.log(email)
     email = email.trim();
@@ -115,10 +125,16 @@ router.post('/recupera-password', async (req, res) => {
         
      }  
 
+    } else {
+      res.send('Sem autorização')
+      res.status(401)
+    }
+
 })
 
 router.post('/finduser', async (req, res) => {
-    console.log('Busca USER', )
+  if (process.env.padrao === req.body.padrao) {
+ 
     //let teste = "rsr@gmail.com"
     try {
        console.log(req.body)
@@ -144,10 +160,16 @@ router.post('/finduser', async (req, res) => {
          }
     }
 
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
+
 })
 
 router.post('/create-user-email', async (req, res) => {
-    console.log('NOVO USER CRIADOPELO EMAIL')
+  if (process.env.padrao === req.body.padrao) {
+
     try {
  
      const data = await User.create(req.body)
@@ -169,6 +191,11 @@ router.post('/create-user-email', async (req, res) => {
        }
        
     }
+
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 })
 

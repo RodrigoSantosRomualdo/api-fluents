@@ -14,14 +14,21 @@ const db = mongoose.connection;
 //const session = await db.startSession();
 
 router.post('/datapremium', async (req, res) => {
-  
+  if (process.env.padrao === req.body.padrao) {
+
   res.json({
     data: process.env.DATA
   })
+
+} else {
+  res.send('Sem autorização')
+  res.status(401)
+}
 })
 
 router.post('/premium', async (req, res) => { 
 
+  if (process.env.padrao === req.body.padrao) {
   try {
     //console.log('req ', req.body.email)
     let date = new Date();
@@ -52,12 +59,18 @@ router.post('/premium', async (req, res) => {
     
   }
 
+} else {
+  res.send('Sem autorização')
+  res.status(401)
+}
+
 
 });
 
 router.post('/create', async (req, res) => {
 
-    console.log(req.body)
+  if (process.env.padrao === req.body.padrao) {
+
     let { email, password, nome} = req.body;
     email = email.trim();
     password = password.trim();
@@ -143,10 +156,18 @@ router.post('/create', async (req, res) => {
             });
           });
       }
+  
+    } else {
+      res.send('Sem autorização')
+      res.status(401)
+    }
 
 }); 
 
 router.post('/login', async (req, res) => {
+
+  if (process.env.padrao === req.body.padrao) {
+
     let { email, password } = req.body;
   email = email.trim();
   password = password.trim();
@@ -204,11 +225,17 @@ router.post('/login', async (req, res) => {
         });
       });
   }
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 })
 
 
 router.post('/recupera-password', async (req, res) => {
+
+  if (process.env.padrao === req.body.padrao) {
     let { email } = req.body;
     console.log(email)
     email = email.trim();
@@ -274,12 +301,18 @@ router.post('/recupera-password', async (req, res) => {
         }
         
         
-     }  
+     } 
+    } else {
+      res.send('Sem autorização')
+      res.status(401)
+    }
 
 })
 
 router.post('/finduser', async (req, res) => {
-    console.log('Busca USER', )
+    
+  if (process.env.padrao === req.body.padrao) {
+
     try {
        console.log(req.body)
        const { email } = req.body;
@@ -309,11 +342,17 @@ router.post('/finduser', async (req, res) => {
              //res.status(500).send(erro)
          }
     }
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 })
 
 router.post('/create-user-email', async (req, res) => {
-    console.log('NOVO USER CRIADOPELO EMAIL')
+
+  if (process.env.padrao === req.body.padrao) {
+
     try {
  
      const data = await User.create(req.body)
@@ -335,6 +374,11 @@ router.post('/create-user-email', async (req, res) => {
        }
        
     }
+
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 })
 

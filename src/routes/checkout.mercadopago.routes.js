@@ -11,6 +11,7 @@ mercadopago.configure({
 });
 
 router.post('/pagamento', async (req, res) => {
+   if (process.env.padrao === req.body.padrao) {
    try {
     //  console.log(req.body.email)
 
@@ -58,6 +59,10 @@ router.post('/pagamento', async (req, res) => {
    } catch (error) {
       console.log(error)
    }
+} else {
+   res.send('Sem autorização')
+   res.status(401)
+ }
 
 }); 
 

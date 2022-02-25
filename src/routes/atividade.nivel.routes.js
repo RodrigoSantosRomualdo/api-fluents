@@ -9,7 +9,8 @@ const db = mongoose.connection;
 
 router.post('/create', async (req, res) => {
 
-    console.log(req.body)
+  if (process.env.padrao === req.body.padrao) {
+
     let { nome, ordem, nivel_disponivel} = req.body;
     console.log(nome, '  ' , ordem, ' ', nivel_disponivel)
    try {
@@ -28,10 +29,15 @@ router.post('/create', async (req, res) => {
        }
    }
 
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
+
 }); 
 
 router.post('/buscar-atividade', async (req, res) => {
-
+  if (process.env.padrao === req.body.padrao) {
   try {
     const { tema_aprendizado, nivel_disponivel, ordem } = req.body;
 
@@ -53,6 +59,11 @@ router.post('/buscar-atividade', async (req, res) => {
   } catch (error) {
       console.log(error)
       res.status(500).send(erro)
+  }
+
+} else {
+    res.send('Sem autorização')
+    res.status(401)
   }
 
 });

@@ -9,6 +9,7 @@ const db = mongoose.connection;
 
 router.post('/create', async (req, res) => {
 
+  if (process.env.padrao === req.body.padrao) {
    try {
      const data = temaNivel.create(req.body)
 
@@ -24,11 +25,16 @@ router.post('/create', async (req, res) => {
          res.status(500).send(erro)
        }
    }
+  } else {
+    res.send('Sem autorização')
+    res.status(401)
+  }
 
 }); 
 
 router.post('/buscar', async (req, res) => {
 
+  if (process.env.padrao === req.body.padrao) {
   try {
     const { tema_aprendizado } = req.body;
     const data = await temaNivel.find({tema_aprendizado});
@@ -40,6 +46,10 @@ router.post('/buscar', async (req, res) => {
       console.log(error)
       res.status(500).send(erro)
   }
+} else {
+  res.send('Sem autorização')
+  res.status(401)
+}
 
 });
 
